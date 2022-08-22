@@ -1,7 +1,6 @@
 package Day15HashTable;
 
 import java.util.ArrayList;
-
 public class MyHashTable<K, V> {
     MyMapNode<K, V> head;
     MyMapNode<K, V> tail;
@@ -9,7 +8,7 @@ public class MyHashTable<K, V> {
     ArrayList<MyMapNode<K, V>> myBucketArray;
 
     public MyHashTable() {
-        this.numOfBuckets = 10;
+        this.numOfBuckets = 20;
         this.myBucketArray = new ArrayList<>(numOfBuckets);
         // Create empty LinkedLists
         for (int i = 0; i < numOfBuckets; i++)
@@ -55,7 +54,8 @@ public class MyHashTable<K, V> {
     public int getBucketIndex(K key) {
         int hashCode = Math.abs(key.hashCode());
         int index = hashCode % numOfBuckets;
-        //       System.out.println("Key: "+key+" hashcode: "+hashCode+" index: "+index);
+        // System.out.println("Key: "+key+" hashcode: "+hashCode+" index:
+        // "+index);
         return index;
     }
     /*
@@ -70,6 +70,21 @@ public class MyHashTable<K, V> {
             this.tail.setNext(myNode);
             this.tail = myNode;
         }
+    }
+    public void remove(K key) {
+        MyMapNode<K, V> currentNode = head;
+        MyMapNode<K, V> previousNode = null;
+        while (currentNode != null && currentNode.getKey().equals(key)) {
+            head = currentNode.getNext();
+        }
+        while (currentNode != null && !(currentNode.getKey().equals(key))) {
+            previousNode = currentNode;
+            currentNode = currentNode.getNext();
+        }
+        if (currentNode != null)
+            previousNode.next = currentNode.next;
+        if (currentNode == null)
+            System.out.println("Word not found");
     }
     @Override
     public String toString() {
